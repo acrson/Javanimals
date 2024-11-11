@@ -5,7 +5,6 @@ import java.awt.*;
 public class Pet {
     private final String name;
     private final String type;
-    private int happiness;
     private int health;
     private int currentAge;
     private final int lifeExpectancy;
@@ -14,11 +13,10 @@ public class Pet {
     private final int difficultyLevel;
 
     // Constructor for Pet
-    public Pet(String name, String type, int happiness, int health, int currentAge,
+    public Pet(String name, String type, int health, int currentAge,
                int lifeExpectancy, Color color, char sex, int difficultyLevel) {
         this.name = name;
         this.type = type;
-        this.happiness = happiness;
         this.health = health;
         this.currentAge = currentAge;
         this.lifeExpectancy = lifeExpectancy;
@@ -34,10 +32,6 @@ public class Pet {
 
     public String getType() {
         return type;
-    }
-
-    public int getHappiness() {
-        return happiness;
     }
 
     public int getHealth() {
@@ -67,7 +61,7 @@ public class Pet {
     // toString method for Pet
     @Override
     public String toString() {
-        return "Pet(" + "name = " + getName() + ", type = " + getType() + ", happiness = " + getHappiness()
+        return "Pet(" + "name = " + getName() + ", type = " + getType() 
                 + ", health = " + getHealth() + ", current age = " + getCurrentAge() + ", life expectancy = "
                 + getLifeExpectancy() + ", color = " + getColor() + ", sex = " + getSex() +
                 ", difficultyLevel = " + getDifficultyLevel() + ")";
