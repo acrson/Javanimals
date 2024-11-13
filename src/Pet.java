@@ -10,11 +10,10 @@ public class Pet {
     private final int lifeExpectancy;
     private final Color color;
     private final char sex;
-    private final int difficultyLevel;
 
     // Constructor for Pet
     public Pet(String name, String type, int health, int currentAge,
-               int lifeExpectancy, Color color, char sex, int difficultyLevel) {
+               int lifeExpectancy, Color color, char sex) {
         this.name = name;
         this.type = type;
         this.health = health;
@@ -22,7 +21,6 @@ public class Pet {
         this.lifeExpectancy = lifeExpectancy;
         this.color = color;
         this.sex = sex;
-        this.difficultyLevel = difficultyLevel;
     }
 
     //Getters
@@ -54,8 +52,32 @@ public class Pet {
         return sex;
     }
 
-    public int getDifficultyLevel() {
-        return difficultyLevel;
+    public String setName(String name) {
+        return name;
+    }
+
+    public String setType(String type) {
+        return type;
+    }
+
+    public int setHealth(int health) {
+        return health;
+    }
+
+    public int setCurrentAge(int currentAge) {
+        return currentAge;
+    }
+
+    public int setLifeExpectancy(int lifeExpectancy) {
+        return lifeExpectancy;
+    }
+
+    public Color setColor(Color color) {
+        return color;
+    }
+
+    public boolean setSex(boolean sex) {
+        return sex;
     }
 
     // toString method for Pet
@@ -63,8 +85,7 @@ public class Pet {
     public String toString() {
         return "Pet(" + "name = " + getName() + ", type = " + getType() 
                 + ", health = " + getHealth() + ", current age = " + getCurrentAge() + ", life expectancy = "
-                + getLifeExpectancy() + ", color = " + getColor() + ", sex = " + getSex() +
-                ", difficultyLevel = " + getDifficultyLevel() + ")";
+                + getLifeExpectancy() + ", color = " + getColor() + ", sex = " + getSex();
     }
 
     //Driver Class
@@ -75,14 +96,14 @@ public class Pet {
             // Array of Pet objects
             Pet[] pets = new Pet[4];
 
-            pets[0] = new Pet("Spencer", "dog", 93, 82, 9,
-                    13, Color.ORANGE, 'M', 3);
-            pets[1] = new Pet("Clover", "cat", 23, 95, 5,
-                    16, Color.GRAY, 'F', 8);
-            pets[2] = new Pet("Polly", "bird", 86, 54, 11,
-                    14, Color.BLUE, 'F', 7);
-            pets[3] = new Pet("Swim-Swim", "fish", 2, 90, 1,
-                    4, Color.YELLOW, 'M', 3);
+            pets[0] = new Pet("Spencer", "dog", 93, 9,
+                    13, Color.ORANGE, 'M');
+            pets[1] = new Pet("Clover", "cat", 23, 5,
+                    16, Color.GRAY, 'F');
+            pets[2] = new Pet("Polly", "bird", 86, 11,
+                    14, Color.BLUE, 'F');
+            pets[3] = new Pet("Swim-Swim", "fish", 2, 1,
+                    4, Color.YELLOW, 'M');
 
             //Loop to print each Plant object
             for (Pet p : pets) {
