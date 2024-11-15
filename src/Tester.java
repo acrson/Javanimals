@@ -20,19 +20,16 @@ public class Tester
         System.out.println("Enter the breed for fish(e.g., Small, Medium, Large): ");
         String breedFish = scanner.nextLine();
 
-
-
-
         //create the cat and fish object with initial values
-        Cat myCat = new Cat(catName, "Cat", 8, 9, 3, 15, Color.GRAY, 'M', 1, breedCat);
-        Fish myFish = new Fish(fishName, "Fish", 7, 6, 1, 3, Color.GRAY, 'F', 1, breedFish);
+        Cat myCat = new Cat(catName, "Cat", 8, 9, 3, 15, Color.GRAY, 'M',  breedCat);
+        Fish myFish = new Fish(fishName, "Fish", 7, 6, 1, 3, Color.GRAY, 'F', breedFish);
 
         //create a list of pets and add the cats
         List<Pet> petList = new ArrayList<>();  // Correctly typed as List<Pet>
         petList.add(myCat);
         petList.add(myFish);
 
-        //Create the PetManager, which will manage the timers for all pets
+        //create the PetManager, which will manage the timers for all pets
         PetTimer petTimer = new PetTimer(petList);
         //Start the timer to automatically update pet attributes every 10 seconds
         Timer timer = new Timer(true);//A daemon timer so it will stop when the main program stops
@@ -59,28 +56,28 @@ public class Tester
             //Execute user choice
             switch (choice) {
                 case 1 -> {
-                    if (myCat.isAlive()) {
+                    if (myCat.getIsAlive()) {
                         myCat.cleanLitterBox();
                     } else {
                         System.out.println("Whiskers is dead and cannot clean the litter box.");
                     }
                 }
                 case 2 -> {
-                    if (myCat.isAlive()) {
+                    if (myCat.getIsAlive()) {
                         myCat.play();
                     } else {
                         System.out.println("Whiskers is dead and cannot play.");
                     }
                 }
                 case 3 -> {
-                    if (myFish.isAlive()) {
+                    if (myFish.getIsAlive()) {
                         myFish.cleanTank();
                     } else {
                         System.out.println("Blue is dead and cannot clean the tank.");
                     }
                 }
                 case 4 -> {
-                    if (myFish.isAlive()) {
+                    if (myFish.getIsAlive()) {
                         myFish.play();
                     } else {
                         System.out.println("Blue is dead and cannot play.");
