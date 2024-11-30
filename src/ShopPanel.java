@@ -11,58 +11,114 @@ public class ShopPanel extends JPanel {
     //adding these variables that keep track of available items and users balance.
     private final List<Item> availableItems;
     private int userBalance;
-    private final Label balanceLabel;
+    private final JLabel balanceLabel;
 
     public ShopPanel() {
+
         this.availableItems = ItemFactory.createItems();
-        this.userBalance = 0;
+        //can change this, setting the balance here so there is something
+        this.userBalance = 30;
 
-        this.balanceLabel = new Label("Balance: " + userBalance);
+        this.balanceLabel = new JLabel("Balance: " + userBalance, JLabel.CENTER);
+
         this.setLayout(new BorderLayout());
-        this.add(balanceLabel, BorderLayout.NORTH);
 
-        Panel itemPanel = new Panel();
-        itemPanel.setLayout(new GridLayout(availableItems.size(), 1));
+        JLabel titleLabel = new JLabel("Shop Panel", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        titleLabel.setForeground(Color.WHITE);
+        this.add(titleLabel, BorderLayout.NORTH);
 
-        //for loop that prints out all available items in the shop and prints out
-        for (int i = 0; i < availableItems.size(); i++) {
-            Item item = availableItems.get(i);
-            Button itemButton = new Button(item.getName() + "- Price: " + item.getPrice());
-
-            int index = i;
-            itemButton.addActionListener(_ -> purchaseItem(index));
-            itemPanel.add(itemButton);
-        }
-        this.add(itemPanel, BorderLayout.CENTER);
-        //prints out users balance
-        System.out.println("Your current balance is: " + userBalance);
+        JPanel itemPanel = getItemPanel();
+        //added this incase we want to add more items
+        JScrollPane itemScrollPane = new JScrollPane(itemPanel);
+        this.add(itemScrollPane, BorderLayout.CENTER);
+        balanceLabel.setForeground(Color.WHITE);
+        this.add(balanceLabel, BorderLayout.SOUTH);
 
         //GUI display
         Color brown = new Color(120, 80, 50);
         this.setPreferredSize(new Dimension(400, 400));
         this.setBackground(brown);
-
-        JLabel titleLabel = new JLabel("ShopPanel");
-        add(titleLabel);
+        //text area
+        System.out.println("Your current balance is: " + userBalance);
     }
+
+    private JPanel getItemPanel() {
+        JPanel itemPanel = new JPanel();
+        //prints out the items in a grid layout with 1 column
+        itemPanel.setLayout(new GridLayout(availableItems.size(), 1));
+
+        //for loop that prints out all available items in the shop and prints out
+        for (int i = 0; i < availableItems.size(); i++) {
+            Item item = availableItems.get(i);
+
+              Button itemButton = new Button(item.getName() + "- Price: " + item.getPrice());
+
+            int index = i;
+            itemButton.addActionListener(_ -> purchaseItem(index));
+            itemPanel.add(itemButton);
+        }
+        return itemPanel;
+    }
+
     //gets the users balance
     private void updateBalanceLabel() {
         balanceLabel.setText("Balance: " + userBalance);
     }
     //
-    public boolean purchaseItem(int itemIndex) {
+    //used for a popup to ask user what animal you want the item to be applied to
+    private String selectPetForItem(Item item) {
+        String petType = JOptionPane.showInputDialog(this, "What is the pet would you apply this item to?");
+        return switch (petType.toLowerCase()) {
+            case "dog", "cat", "bird", "fish" -> petType;
+            default -> {
+                System.out.println("Invalid pet type");
+                yield "";
+            }
+        };
+    }
+    
+    public void purchaseItem(int itemIndex) {
         if (itemIndex < 0 || itemIndex >= availableItems.size()) {
             System.out.println("Invalid item index");
-            return false;
+            return;
         }
+
         Item item = availableItems.get(itemIndex);
+
+        //Ask user which pet they want to apply the item to
+        String petType = selectPetForItem(item);
+
+        //Check if the item is applicable to the selected pet
+        if (!item.isApplicable(petType)) {
+            // If not show an error message and prevent purchase
+            JOptionPane.showMessageDialog(this,
+                    "The item " + item.getName() + " cannot be used on a " + petType + ".",
+                    "Item Not Applicable",
+                    JOptionPane.ERROR_MESSAGE);
+
+            //Explicitly indicate that no money has been deducted
+            System.out.println("No money was deducted because the item cannot be used on this pet.");
+            return; //Stop further execution of the method
+        }
+
+        //Check if user has enough balance to purchase the item
         if (userBalance >= item.getPrice()) {
             userBalance -= item.getPrice();
             System.out.println("You purchased " + item.getName() + ".");
-            return true;
+
+            //Proceed with applying the item to the pet
+            System.out.println(item.getName() + " applied to " + petType);
+
+            //Update balance label after the purchase
+            updateBalanceLabel();
         } else {
+            //If the user doesn't have enough money
+            JOptionPane.showMessageDialog(this,
+                    "You don't have enough money to purchase " + item.getName() + ".",
+                    "Insufficient Funds",
+                    JOptionPane.ERROR_MESSAGE);
             System.out.println("You don't have enough money to purchase " + item.getName() + ".");
-            return false;
         }
     }
 }
