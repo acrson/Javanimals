@@ -17,7 +17,7 @@ public class PetManagementPanel extends JPanel {
     private int fishCount; // Keeps track of the number of fish
 
     // Constructor
-    public PetManagementPanel() {
+    public PetManagementPanel(PetDisplayPanel petDisplayPanel) {
         pets = new Pet[MAX_PETS];
         dogs = new Dog[MAX_PETS];
         cats = new Cat[MAX_PETS];
@@ -119,7 +119,21 @@ public class PetManagementPanel extends JPanel {
                     pets[petCount++] = newPet; // Add to the main pets array
                     JOptionPane.showMessageDialog(null, name + " the " + type + " has been created!");
                     System.out.println("All pets: " + getAllPets());
-                } else {
+
+                    // Create a new panel for the pet and display its name
+                    JPanel petPanel = new JPanel();
+                    petPanel.setLayout(new FlowLayout());
+                    petPanel.setPreferredSize(new Dimension(50, 50));
+                    petPanel.setBackground(newPet.getColor());
+
+                    JLabel petNameLabel = new JLabel(newPet.getName());
+                    petNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    petPanel.add(petNameLabel, BorderLayout.CENTER);
+
+                    // Add the new pet panel to the PetDisplayPanel
+                    petDisplayPanel.addPetPanel(petPanel);
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "Maximum number of pets reached!");
                 }
             }

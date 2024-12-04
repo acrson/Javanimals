@@ -17,10 +17,11 @@ public class AnimalGUI {
         mainPanel.setLayout(null);
         mainPanel.setPreferredSize(new Dimension(2000, 900));
         mainPanel.setBackground(Color.BLACK);
+        Pet pet = new Pet("", "", 0, 0 ,0, 0, Color.BLACK, 'M');
 
-        petManagementPanel = new PetManagementPanel();
         petDisplayPanel = new PetDisplayPanel();
-        petDetailsPanel = new PetDetailsPanel();
+        petManagementPanel = new PetManagementPanel(petDisplayPanel);
+        petDetailsPanel = new PetDetailsPanel(pet);
         inventoryPanel = new InventoryPanel();
         shopPanel = new ShopPanel();
 
