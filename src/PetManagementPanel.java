@@ -15,6 +15,8 @@ public class PetManagementPanel extends JPanel {
     private int catCount; // Keeps track of the number of cats
     private int birdCount; // Keeps track of the number of birds
     private int fishCount; // Keeps track of the number of fish
+    Color Brown = new Color(100, 60, 25);
+    Color Beige = new Color(207, 185, 151);
 
     // Constructor
     public PetManagementPanel(PetDisplayPanel petDisplayPanel) {
@@ -42,7 +44,8 @@ public class PetManagementPanel extends JPanel {
         JLabel typeLabel = new JLabel("Type:");
         JComboBox<String> typeComboBox = new JComboBox<>(new String[]{"Dog", "Cat", "Bird", "Fish"});
         JLabel colorLabel = new JLabel("Color:");
-        JComboBox<String> colorComboBox = new JComboBox<>(new String[]{"Orange", "Gray", "Blue", "Yellow"});
+        JComboBox<String> colorComboBox = new JComboBox<>(new String[]{"Red","Orange","Yellow","Green","Cyan",
+                "Blue","Magenta","Pink","Light Gray","Gray","Dark Gray","Black","Brown","Beige"});
         JLabel sexLabel = new JLabel("Sex:");
         JComboBox<Character> sexComboBox = new JComboBox<>(new Character[]{'M', 'F'});
 
@@ -127,6 +130,11 @@ public class PetManagementPanel extends JPanel {
                     petPanel.setBackground(newPet.getColor());
 
                     JLabel petNameLabel = new JLabel(newPet.getName());
+                    if (newPet.getColor() == Color.BLACK || newPet.getColor() == Color.blue
+                         || newPet.getColor() == Brown || newPet.getColor() == Color.darkGray)
+                    {
+                        petNameLabel.setForeground(Color.white);
+                    }
                     petNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
                     petPanel.add(petNameLabel, BorderLayout.CENTER);
 
@@ -143,14 +151,34 @@ public class PetManagementPanel extends JPanel {
     // Helper method to convert color names to Color objects
     private Color getColorFromName(String colorName) {
         switch (colorName) {
+            case "Red":
+                return Color.RED;
             case "Orange":
                 return Color.ORANGE;
-            case "Gray":
-                return Color.GRAY;
-            case "Blue":
-                return Color.BLUE;
             case "Yellow":
                 return Color.YELLOW;
+            case "Green":
+                return Color.GREEN;
+            case "Cyan":
+                return Color.CYAN;
+            case "Blue":
+                return Color.BLUE;
+            case "Magenta":
+                return Color.MAGENTA;
+            case "Pink":
+                return Color.PINK;
+            case "Light Gray":
+                return Color.lightGray;
+            case "Gray":
+                return Color.GRAY;
+            case "Dark Gray":
+                return Color.darkGray;
+            case "Black":
+               return Color.black;
+            case "Brown":
+                return Brown;
+            case "Beige":
+                return Beige;
             default:
                 return Color.WHITE;
         }
