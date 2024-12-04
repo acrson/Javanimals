@@ -18,6 +18,11 @@ public class PetManagementPanel extends JPanel {
     Color Brown = new Color(100, 60, 25);
     Color Beige = new Color(207, 185, 151);
 
+    String dogimg = "\n\n  / \\__     \n (    @\\__  \n /         O\n/   (_____/ \n/_____/   U\n";
+    String catimg = "\n\n\n /\\_/\\ \n( o.o )\n > ^ < \n";
+    String birdimg = "\n\n\n  .--.   \n <(o )___\n  (   ._> \n `----'   \n";
+    String fishimg = "\n\n\n\n><(((('>\n";
+
     // Constructor
     public PetManagementPanel(PetDisplayPanel petDisplayPanel) {
         pets = new Pet[MAX_PETS];
@@ -120,26 +125,72 @@ public class PetManagementPanel extends JPanel {
 
                 if (newPet != null && petCount < MAX_PETS) {
                     pets[petCount++] = newPet; // Add to the main pets array
-                    JOptionPane.showMessageDialog(null, name + " the " + type + " has been created!");
-                    System.out.println("All pets: " + getAllPets());
 
                     // Create a new panel for the pet and display its name
                     JPanel petPanel = new JPanel();
-                    petPanel.setLayout(new FlowLayout());
-                    petPanel.setPreferredSize(new Dimension(50, 50));
+                    petPanel.setLayout(new BoxLayout(petPanel, BoxLayout.Y_AXIS));  // Stacks components vertically
+                    petPanel.setPreferredSize(new Dimension(262, 242));
                     petPanel.setBackground(newPet.getColor());
 
                     JLabel petNameLabel = new JLabel(newPet.getName());
+
+                    JLabel petImageLabel = new JLabel("n/a");
+
+                    switch (newPet.getType()) {
+                        case "Dog":
+                            String formattedDogImg = "<html><div style='text-align: center; font-family: monospace;'>" +
+                                    dogimg.replace(" ", "&nbsp;")
+                                            .replace("<", "&lt;") // Escape the < character
+                                            .replace("\n", "<br>") +
+                                    "</div></html>";
+                            petImageLabel = new JLabel(formattedDogImg);
+                            break;
+                        case "Cat":
+                            String formattedCatImg = "<html><div style='text-align: center; font-family: monospace;'>" +
+                                    catimg.replace(" ", "&nbsp;")
+                                            .replace("<", "&lt;") // Escape the < character
+                                            .replace("\n", "<br>") +
+                                    "</div></html>";
+                            petImageLabel = new JLabel(formattedCatImg);
+                            break;
+                        case "Bird":
+                            String formattedBirdImg = "<html><div style='text-align: center; font-family: monospace;'>" +
+                                    birdimg.replace(" ", "&nbsp;")
+                                            .replace("<", "&lt;") // Escape the < character
+                                            .replace("\n", "<br>") +
+                                    "</div></html>";
+                            petImageLabel = new JLabel(formattedBirdImg);
+                            break;
+                        case "Fish":
+                            String formattedFishImg = "<html><div style='text-align: center; font-family: monospace;'>" +
+                                    fishimg.replace(" ", "&nbsp;")
+                                            .replace("<", "&lt;") // Escape the < character
+                                            .replace("\n", "<br>") +
+                                    "</div></html>";
+                            petImageLabel = new JLabel(formattedFishImg);
+                            break;
+                    }
+
                     if (newPet.getColor() == Color.BLACK || newPet.getColor() == Color.blue
-                         || newPet.getColor() == Brown || newPet.getColor() == Color.darkGray)
+                            || newPet.getColor() == Brown || newPet.getColor() == Color.darkGray)
                     {
                         petNameLabel.setForeground(Color.white);
+                        petImageLabel.setForeground(Color.white);
                     }
+
+                    petNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    petImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                     petNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    petImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
                     petPanel.add(petNameLabel, BorderLayout.CENTER);
+                    petPanel.add(petImageLabel, BorderLayout.CENTER);
 
                     // Add the new pet panel to the PetDisplayPanel
                     petDisplayPanel.addPetPanel(petPanel);
+
+                    JOptionPane.showMessageDialog(null, name + " the " + type + " has been created!");
+                    System.out.println("All pets: " + getAllPets());
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Maximum number of pets reached!");
