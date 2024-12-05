@@ -2,17 +2,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class PetDetailsPanel extends JPanel {
     private JButton toggleButton;
     private JPanel detailsPanel;
     private boolean isExpanded = false;
+    private HashMap<Color, String> colorNames = new HashMap<>(); // Class-level field
 
     public PetDetailsPanel(Pet pet) {
         Color skyBlue = new Color(90, 150, 255);
         this.setPreferredSize(new Dimension(400, 400));
         this.setBackground(skyBlue);
+        setLayout(new BorderLayout());
 
+        JLabel titleLabel = new JLabel("Pet Details Panel");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        add(titleLabel, BorderLayout.NORTH);
+
+        /*
         toggleButton = new JButton("PetDetailsPanel");
         toggleButton.addActionListener(new ActionListener() {
             @Override
@@ -22,26 +32,93 @@ public class PetDetailsPanel extends JPanel {
                 toggleButton.setText(isExpanded ? "Hide Details" : "Show Details");
             }
         });
-        add(toggleButton);
+        add(toggleButton);*/
 
         detailsPanel = new JPanel();
         detailsPanel.setBackground(skyBlue);
-        detailsPanel.add(new JLabel("Name: " + pet.getName()));
-        detailsPanel.add(new JLabel("Sex: " + pet.getSex()));
-        detailsPanel.add(new JLabel("Age: " + pet.getCurrentAge()));
-        detailsPanel.add(new JLabel("Color: " + pet.getColor()));
-        detailsPanel.add(new JLabel("Life Expectancy: " + pet.getLifeExpectancy()));
-        detailsPanel.add(new JLabel("Breed: " + pet.getType()));
-        detailsPanel.setVisible(false);
+        detailsPanel.setPreferredSize(new Dimension(535, 350));
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+        add(detailsPanel, BorderLayout.CENTER);
+
+        JLabel noDetailsLabel = new JLabel("Select a pet to view details.");
+        noDetailsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        detailsPanel.add(noDetailsLabel);
+
+        //detailsPanel.setVisible(true);
+        revalidate();
+        repaint();
     }
 
     public void showPetDetails(Pet pet) {
-        removeAll(); // Clear previous details
-        setLayout(new BorderLayout());
-        JLabel detailsLabel = new JLabel("<html>" + pet.toString().replace("\n", "<br>") + "</html>");
-        detailsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(detailsLabel, BorderLayout.CENTER);
+        detailsPanel.removeAll(); // Clear previous details
+
+        String fullSex = "";
+
+        if (pet.getSex() == 'M')
+            fullSex = "Male";
+        else
+            fullSex = "Female";
+
+        if (pet == null) {
+            JLabel noDetailsLabel = new JLabel("Select a pet to view details.");
+            noDetailsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            detailsPanel.add(noDetailsLabel);
+        } else {
+            // Add pet attributes
+            addDetailLabel("Name: " + pet.getName());
+            addDetailLabel("Type: " + pet.getType());
+            addDetailLabel("Color: " + getColorName(pet.getColor()));
+            addDetailLabel("Sex: " + fullSex);
+            addDetailLabel("Age: " + pet.getCurrentAge());
+            addDetailLabel("Life Expectancy: " + pet.getLifeExpectancy());
+        }
+
         revalidate();
         repaint();
+    }
+
+    private void addDetailLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT); // Align text to the left
+        label.setFont(new Font("Arial", Font.PLAIN, 14));
+        detailsPanel.add(label);
+        detailsPanel.add(Box.createVerticalStrut(5)); // Add some space between labels
+    }
+
+    private String getColorName(Color color) {
+        Color Brown = new Color(100, 60, 25);
+        Color Beige = new Color(207, 185, 151);
+        String colorName = "";
+
+        if (color == Color.RED)
+            colorName = "Red";
+        else if (color == Color.ORANGE)
+            colorName = "Orange";
+        else if (color == Color.YELLOW)
+            colorName = "Yellow";
+        else if (color == Color.GREEN)
+            colorName = "Green";
+        else if (color == Color.CYAN)
+            colorName = "Cyan";
+        else if (color == Color.BLUE)
+            colorName = "Blue";
+        else if (color == Color.MAGENTA)
+            colorName = "Magenta";
+        else if (color == Color.PINK)
+            colorName = "Pink";
+        else if (color == Color.LIGHT_GRAY)
+            colorName = "Light Gray";
+        else if (color == Color.GRAY)
+            colorName = "Gray";
+        else if (color == Color.DARK_GRAY)
+            colorName = "Dark Gray";
+        else if (color == Color.BLACK)
+            colorName = "Black";
+        else if (Objects.equals(color, Brown))
+            colorName = "Brown";
+        else if (Objects.equals(color, Beige))
+            colorName = "Beige";
+
+        return colorName;
     }
 }

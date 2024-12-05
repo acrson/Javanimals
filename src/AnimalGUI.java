@@ -27,9 +27,9 @@ public class AnimalGUI {
 
         frame.add(mainPanel, BorderLayout.CENTER);
         petDisplayPanel.setBounds(240, 65, 1100, 280);
-        petDetailsPanel.setBounds(1350, 5, 400, 750);
+        shopPanel.setBounds(1350, 5, 400, 750);
         inventoryPanel.setBounds(240, 5, 1100, 50);
-        shopPanel.setBounds(240, 355, 545, 400);
+        petDetailsPanel.setBounds(240, 355, 545, 400);
         petManagementPanel.setBounds(795, 355, 545, 400);
 
         mainPanel.add(petDisplayPanel);

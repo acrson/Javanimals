@@ -200,13 +200,14 @@ public class PetManagementPanel extends JPanel {
                     DetailsButtons[petCount-1] = new JButton("View Details");
                     DetailsButtons[petCount-1].setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                    // Action listener for the details button
-                    DetailsButtons[petCount-1].addActionListener(new ActionListener() {
+                    int currentPetIndex = petCount - 1;
+                    DetailsButtons[currentPetIndex].addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                           // petDetailsPanel.showPetDetails(pets[petCount]); // Pass the pet to display details, make newPet the pet of that panel
+                            petDetailsPanel.showPetDetails(pets[currentPetIndex]); // Use the captured index
                         }
                     });
+
 
                     petNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                     petImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -215,7 +216,7 @@ public class PetManagementPanel extends JPanel {
 
                     petPanel.add(petNameLabel, BorderLayout.CENTER);
                     petPanel.add(petImageLabel, BorderLayout.CENTER);
-                    petPanel.add(DetailsButtons[petCount-1], BorderLayout.CENTER);
+                    petPanel.add(DetailsButtons[petCount-1], BorderLayout.SOUTH);
 
                     // Add the new pet panel to the PetDisplayPanel
                     petDisplayPanel.addPetPanel(petPanel);
