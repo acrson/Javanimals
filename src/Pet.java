@@ -3,6 +3,7 @@
 import java.awt.*;
 
 public class Pet {
+    public int ID;
     private String name;
     private String type;
     private int health;

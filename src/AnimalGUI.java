@@ -20,8 +20,8 @@ public class AnimalGUI {
         Pet pet = new Pet("", "", 0, 0 ,0, 0, Color.BLACK, 'M');
 
         petDisplayPanel = new PetDisplayPanel();
-        petManagementPanel = new PetManagementPanel(petDisplayPanel);
         petDetailsPanel = new PetDetailsPanel(pet);
+        petManagementPanel = new PetManagementPanel(petDisplayPanel, petDetailsPanel);
         inventoryPanel = new InventoryPanel();
         shopPanel = new ShopPanel();
 

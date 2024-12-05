@@ -34,4 +34,14 @@ public class PetDetailsPanel extends JPanel {
         detailsPanel.add(new JLabel("Breed: " + pet.getType()));
         detailsPanel.setVisible(false);
     }
+
+    public void showPetDetails(Pet pet) {
+        removeAll(); // Clear previous details
+        setLayout(new BorderLayout());
+        JLabel detailsLabel = new JLabel("<html>" + pet.toString().replace("\n", "<br>") + "</html>");
+        detailsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(detailsLabel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
 }

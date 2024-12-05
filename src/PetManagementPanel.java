@@ -15,16 +15,17 @@ public class PetManagementPanel extends JPanel {
     private int catCount; // Keeps track of the number of cats
     private int birdCount; // Keeps track of the number of birds
     private int fishCount; // Keeps track of the number of fish
+    boolean uniqueName = true;
     Color Brown = new Color(100, 60, 25);
     Color Beige = new Color(207, 185, 151);
 
-    String dogimg = "\n\n  / \\__     \n (    @\\__  \n /         O\n/   (_____/ \n/_____/   U\n";
-    String catimg = "\n\n\n /\\_/\\ \n( o.o )\n > ^ < \n";
-    String birdimg = "\n\n\n  .--.   \n <(o )___\n  (   ._> \n `----'   \n";
-    String fishimg = "\n\n\n\n><(((('>\n";
+    String dogimg = "\n\n  / \\__     \n (    @\\__  \n /         O\n/   (_____/ \n/_____/   U\n\n\n";
+    String catimg = "\n\n\n /\\_/\\ \n( o.o )\n > ^ < \n\n\n";
+    String birdimg = "\n\n\n  .--.   \n <(o )___\n  (   ._> \n `----'   \n\n\n";
+    String fishimg = "\n\n\n\n><(((('>\n\n\n";
 
     // Constructor
-    public PetManagementPanel(PetDisplayPanel petDisplayPanel) {
+    public PetManagementPanel(PetDisplayPanel petDisplayPanel, PetDetailsPanel petDetailsPanel) {
         pets = new Pet[MAX_PETS];
         dogs = new Dog[MAX_PETS];
         cats = new Cat[MAX_PETS];
@@ -35,6 +36,7 @@ public class PetManagementPanel extends JPanel {
         catCount = 0;
         birdCount = 0;
         fishCount = 0;
+        JButton[] DetailsButtons = new JButton[MAX_PETS];
 
         this.setPreferredSize(new Dimension(400, 400));
         this.setBackground(Color.lightGray);
@@ -79,6 +81,7 @@ public class PetManagementPanel extends JPanel {
         createPetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                uniqueName = true;
                 String name = nameField.getText();
                 String type = (String) typeComboBox.getSelectedItem();
                 Color color = getColorFromName((String) colorComboBox.getSelectedItem());
@@ -90,6 +93,18 @@ public class PetManagementPanel extends JPanel {
                 int currentAge = 1;
                 int lifeExpectancy = 10;
 
+                System.out.println(petCount);
+
+                // Checks whether the created pet's name already exists in the game
+                if (petCount > 0) {
+                    for (int i = 0; i < petCount; i++) {
+                        if (name.equals(pets[i].getName())) {
+                            uniqueName = false;
+                            break;
+                        }
+                    }
+                }
+
                 Pet newPet = null;
 
                 // Create the appropriate type of pet
@@ -97,25 +112,25 @@ public class PetManagementPanel extends JPanel {
                     case "Dog":
                         if (dogCount < MAX_PETS) {
                             newPet = new Dog("Unknown Breed", name, "Dog", attention, health, currentAge, lifeExpectancy, color, sex);
-                            dogs[dogCount++] = (Dog) newPet; // Add dog to array and increment count
+                            //dogs[dogCount++] = (Dog) newPet; // Add dog to array and increment count
                         }
                         break;
                     case "Cat":
                         if (catCount < MAX_PETS) {
                             newPet = new Cat(name, "Cat", attention, health, currentAge, lifeExpectancy, color, sex, "Unknown Breed");
-                            cats[catCount++] = (Cat) newPet; // Add cat to array and increment count
+                            //cats[catCount++] = (Cat) newPet; // Add cat to array and increment count
                         }
                         break;
                     case "Bird":
                         if (birdCount < MAX_PETS) {
                             newPet = new Bird("Unknown Breed", name, "Bird", attention, health, currentAge, lifeExpectancy, color, sex);
-                            birds[birdCount++] = (Bird) newPet; // Add bird to array and increment count
+                            //birds[birdCount++] = (Bird) newPet; // Add bird to array and increment count
                         }
                         break;
                     case "Fish":
                         if (fishCount < MAX_PETS) {
                             newPet = new Fish(name, "Fish", attention, health, currentAge, lifeExpectancy, color, sex, "Unknown Breed");
-                            fish[fishCount++] = (Fish) newPet; // Add fish to array and increment count
+                            //fish[fishCount++] = (Fish) newPet; // Add fish to array and increment count
                         }
                         break;
                     default:
@@ -123,8 +138,11 @@ public class PetManagementPanel extends JPanel {
                         return;
                 }
 
-                if (newPet != null && petCount < MAX_PETS) {
+                // Go on with creating the new pet, only if there IS a pet, you have less than 4 pets, and the pet has a unique name.
+                if (newPet != null && petCount < MAX_PETS && uniqueName) {
+
                     pets[petCount++] = newPet; // Add to the main pets array
+                    newPet.ID = petCount; // Assign the proper ID number to the pet (first pet gets ID of 1) to keep track
 
                     // Create a new panel for the pet and display its name
                     JPanel petPanel = new JPanel();
@@ -178,6 +196,18 @@ public class PetManagementPanel extends JPanel {
                         petImageLabel.setForeground(Color.white);
                     }
 
+                    // Add a button to view pet details
+                    DetailsButtons[petCount-1] = new JButton("View Details");
+                    DetailsButtons[petCount-1].setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                    // Action listener for the details button
+                    DetailsButtons[petCount-1].addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                           // petDetailsPanel.showPetDetails(pets[petCount]); // Pass the pet to display details, make newPet the pet of that panel
+                        }
+                    });
+
                     petNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                     petImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
                     petNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -185,15 +215,21 @@ public class PetManagementPanel extends JPanel {
 
                     petPanel.add(petNameLabel, BorderLayout.CENTER);
                     petPanel.add(petImageLabel, BorderLayout.CENTER);
+                    petPanel.add(DetailsButtons[petCount-1], BorderLayout.CENTER);
 
                     // Add the new pet panel to the PetDisplayPanel
                     petDisplayPanel.addPetPanel(petPanel);
 
+                    System.out.println(petCount);
+
                     JOptionPane.showMessageDialog(null, name + " the " + type + " has been created!");
                     System.out.println("All pets: " + getAllPets());
                 }
-                else {
+                else if (petCount == MAX_PETS) {
                     JOptionPane.showMessageDialog(null, "Maximum number of pets reached!");
+                }
+                else if (!uniqueName) {
+                    JOptionPane.showMessageDialog(null, "Pet with name \"" + name + "\" already exists!");
                 }
             }
         });
