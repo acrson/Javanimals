@@ -10,7 +10,7 @@ different items are different costs*/
 public class ShopPanel extends JPanel {
     //adding these variables that keep track of available items and users balance.
     private final List<Item> availableItems;
-    private int userBalance;
+    private double userBalance;
     private final JLabel balanceLabel;
 
     public ShopPanel() {
@@ -32,13 +32,24 @@ public class ShopPanel extends JPanel {
         //added this incase we want to add more items
         JScrollPane itemScrollPane = new JScrollPane(itemPanel);
         this.add(itemScrollPane, BorderLayout.CENTER);
-        balanceLabel.setForeground(Color.WHITE);
-        this.add(balanceLabel, BorderLayout.SOUTH);
+
+        //panel for balance button
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
+        balanceLabel.setForeground(Color.BLACK);
+        bottomPanel.add(balanceLabel, BorderLayout.NORTH);
+
+        //add balance button to bottomPanel
+        JButton addBalanceButton = new JButton("Add 25 Cents");
+        addBalanceButton.addActionListener(e -> addBalance(0.25));
+        bottomPanel.add(addBalanceButton, BorderLayout.SOUTH);
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         //GUI display
         Color brown = new Color(120, 80, 50);
         this.setPreferredSize(new Dimension(400, 400));
         this.setBackground(brown);
+
         //text area
         System.out.println("Your current balance is: " + userBalance);
     }
@@ -63,9 +74,11 @@ public class ShopPanel extends JPanel {
 
     //gets the users balance
     private void updateBalanceLabel() {
-        balanceLabel.setText("Balance: " + userBalance);
+        balanceLabel.setText(String.format("Balance: %.2f" , userBalance)); //%.2f formats with 2 decimals
+        balanceLabel.revalidate();
+        balanceLabel.repaint();
     }
-    //
+
     //used for a popup to ask user what animal you want the item to be applied to
     private String selectPetForItem(Item item) {
         String petType = JOptionPane.showInputDialog(this, "What is the pet would you apply this item to?");
@@ -120,5 +133,12 @@ public class ShopPanel extends JPanel {
                     JOptionPane.ERROR_MESSAGE);
             System.out.println("You don't have enough money to purchase " + item.getName() + ".");
         }
+    }
+
+    private void addBalance(double amount) {
+        userBalance += amount;
+        System.out.println("Added " + amount + " to your balance.");
+        updateBalanceLabel();
+        System.out.println(userBalance);
     }
 }
