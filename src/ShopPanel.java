@@ -40,9 +40,14 @@ public class ShopPanel extends JPanel {
         bottomPanel.add(balanceLabel, BorderLayout.NORTH);
 
         //add balance button to bottomPanel
-        JButton addBalanceButton = new JButton("Add 25 Cents");
+        BalanceClicker addBalanceButton = new BalanceClicker("$");
         addBalanceButton.addActionListener(e -> addBalance(0.25));
-        bottomPanel.add(addBalanceButton, BorderLayout.SOUTH);
+        //creates new buttonpanel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(addBalanceButton);
+        //add to bottom panel
+        bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         //GUI display
