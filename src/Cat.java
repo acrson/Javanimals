@@ -32,7 +32,7 @@ public class Cat extends Pet {
         }
         litterMeter = 10;//Restore to full meter
         System.out.println("After cleaning the litter box, LitterMeter is now: " + litterMeter);
-        increaseAttentionAndHealth();// Increase attention and health
+        increaseAttention(3);// Increase attention and health
     }
     //Playing with the cat increases happiness
     public void play() {
@@ -40,7 +40,7 @@ public class Cat extends Pet {
             System.out.println("This pet is dead and cannot play.");
             return;
         }
-        increaseAttentionAndHealth();
+        increaseAttention(3);
     }
     @Override
     public String toString() {

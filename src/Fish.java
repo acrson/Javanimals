@@ -34,7 +34,7 @@ public class Fish extends Pet {
         }
         tankMeter = 10;//Restore to full meter
         System.out.println("After cleaning the tank, it is now: " + tankMeter);
-        increaseAttentionAndHealth(); // Increase attention and health
+        increaseAttention(3); // Increase attention and health
     }
     //Play with fish which will increase happiness
     public void play() {
@@ -42,7 +42,7 @@ public class Fish extends Pet {
             System.out.println("This pet is dead and cannot play.");
             return;
         }
-        increaseAttentionAndHealth();
+        increaseAttention(3);
     }
     @Override
     public String toString() {

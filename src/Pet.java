@@ -13,6 +13,7 @@ public class Pet {
     private Color color;
     private char sex;
     private boolean isAlive;
+    private int amount;
 
     // Constructor for Pet
     public Pet(String name, String type, int health, int attention, int currentAge,
@@ -53,9 +54,7 @@ public class Pet {
     public boolean getIsAlive() {
         return isAlive;
     }
-    public int getAttention() {
-        return attention;
-    }
+    public int getAttention() {return attention;}
     //setters
     public void setName(String name) {
         this.name = name;
@@ -82,11 +81,11 @@ public class Pet {
         this.health = health;
     }
     public void setAttention(int attention) {
-        this.attention = attention;
-    }
+        this.attention += amount; //returns amount of attention
+        }
 
-    //Increases Attention and Health
-    protected void increaseAttentionAndHealth()
+    //Increases Attention meter(changed since we will only have one meter)
+    protected void increaseAttention(int amount)
     {
         //only will run if health is = or below 10(doesn't go below meter)
         if (health <= 10) {
@@ -113,7 +112,7 @@ public class Pet {
     //toString method for Pet
     @Override
     public String toString() {
-        return "Pet(" + "name = " + getName() + ", type = " + getType() 
+        return "Pet(" + "name = " + getName() + ", type = " + getType()
                 + ", health = " + getHealth() + ", current age = " + getCurrentAge() + ", life expectancy = "
                 + getLifeExpectancy() + ", color = " + getColor() + ", sex = " + getSex() + ", is alive = " + isAlive + ")";
     }

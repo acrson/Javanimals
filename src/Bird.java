@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Bird extends Pet{
     private int flymeter;
-    private String breed;
+    private final String breed;
     private Timer timer;
 
     public Bird(String breed, String name, String type, int attention, int health, int currentAge, int lifeExpectancy, Color color, char sex){
@@ -32,7 +32,7 @@ public class Bird extends Pet{
         }
         flymeter = 10;
         System.out.println("After flying bird, flymeter is now: " + flymeter);
-        increaseAttentionAndHealth();
+        increaseAttention(3);
     }
 
     public void play(){
@@ -40,7 +40,7 @@ public class Bird extends Pet{
             System.out.println("Bird is dead");
             return;
         }
-        increaseAttentionAndHealth();
+        increaseAttention(3);
     }
 
     public String toString() {
