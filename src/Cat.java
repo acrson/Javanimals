@@ -22,7 +22,7 @@ public class Cat extends Pet {
             litterMeter = 0;//Prevent negative litterMeter
         }
         System.out.println("After using the litter box, LitterMeter is now: " + litterMeter);
-        decreaseHealthAndAttention();//Reduce health and attention
+        decreaseAttention();//Reduce health and attention
     }
     //Clean litter box will restore litter meter and increase happiness
     public void cleanLitterBox() {
@@ -47,4 +47,3 @@ public class Cat extends Pet {
         return super.toString() + ", breed = " + breed + ", litter meter = " + litterMeter;
     }
 }
-

@@ -22,7 +22,7 @@ public class Dog extends Pet{
             walkmeter = 0;
         }
         System.out.println("Dog must be walked, walkmeter is now: " + walkmeter);
-        decreaseHealthAndAttention();
+        decreaseAttention();
     }
 
     public void walkingDog(){
@@ -47,4 +47,3 @@ public class Dog extends Pet{
         return super.toString() + "breed =  " + breed + " walkmeter = " + walkmeter;
     }
 }
-

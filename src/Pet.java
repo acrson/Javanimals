@@ -1,6 +1,6 @@
-//bMiranda Nichols, Carson Stell, Camryn Joyner, Craig Crutcher
-
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Pet {
     public int ID;
@@ -14,6 +14,7 @@ public class Pet {
     private char sex;
     private boolean isAlive;
     private int amount;
+    private Timer attentionDecrementTimer;
 
     // Constructor for Pet
     public Pet(String name, String type, int health, int attention, int currentAge,
@@ -27,6 +28,8 @@ public class Pet {
         this.color = color;
         this.sex = sex;
         this.isAlive = true;
+
+        startAttentionDecrementTimer();
     }
 
     //Getters
@@ -82,7 +85,7 @@ public class Pet {
     }
     public void setAttention(int attention) {
         this.attention += amount; //returns amount of attention
-        }
+    }
 
     //Increases Attention meter(changed since we will only have one meter)
     protected void increaseAttention(int amount)
@@ -99,16 +102,39 @@ public class Pet {
             }
         }
     }
-    protected void decreaseHealthAndAttention() {
+    protected void decreaseAttention() {
         health = Math.max(health - 1, 0);//decreases happiness, ensure it doesn't go below 0
         attention = Math.max(attention - 2, 0);//decreases health, ensure it doesn't go below 0
         System.out.println("Health: " + health + ", Attention: " + attention);
         //Update isAlive based on health
-        if (health <= 0) {
+        if (attention <= 0) {
             isAlive = false;
             System.out.println(name + " has passed away.");
         }
     }
+
+    // Starts the timer to decrease attention every 30 seconds
+    private void startAttentionDecrementTimer() {
+        attentionDecrementTimer = new Timer(true); //timer stops when program ends
+        attentionDecrementTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (isAlive) {
+                    decreaseAttention(1);
+                } else {
+                    attentionDecrementTimer.cancel(); // Stop timer if the pet is not alive
+                }
+            }
+        }, 0, 30 * 1000); // 30 seconds interval
+    }
+
+    // Stops the attention decrement timer
+    public void stopAttentionDecrementTimer() {
+        if (attentionDecrementTimer != null) {
+            attentionDecrementTimer.cancel();
+        }
+    }
+
     //toString method for Pet
     @Override
     public String toString() {
@@ -140,3 +166,4 @@ public class Pet {
         }
     }
 }
+

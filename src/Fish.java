@@ -24,7 +24,7 @@ public class Fish extends Pet {
             tankMeter = 0;//Prevent negative litterMeter
         }
         System.out.println("After using the tank, it is now: " + tankMeter);
-        decreaseHealthAndAttention();//Reduce health and attention
+        decreaseAttention();//Reduce health and attention
     }
     //Clean the tank, will restore tank and increase happiness
     public void cleanTank() {

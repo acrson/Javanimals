@@ -22,7 +22,7 @@ public class Bird extends Pet{
             flymeter = 0;
         }
         System.out.println("Bird must fly around, flymeter is now: " + flymeter);
-        decreaseHealthAndAttention();
+        decreaseAttention();
     }
 
     public void flyingBird(){
