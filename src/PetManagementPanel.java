@@ -2,13 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/*
-I changed some things in this PetManagementPanel, once clicking on an item to buy, the shopPanel then asks the
-user to write in the name of the pet(before I just had the breed) once it asked that and I would type in the relevant
-name it would say the animal did not exist. After tyring to work some things out I realized I might have to
-revamp some things in this class. Instead of having separate arrays for the all the animals, I utilized it into a
-single map where the key is the pets name. I think changing into a map will be good for efficient management too.
- */
+
 public class PetManagementPanel extends JPanel {
     private static final int MAX_PETS = 4; //Maximum number of pets in the array
     boolean uniqueName = true;

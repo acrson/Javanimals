@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
+import java.util.List;
+import java.util.Arrays;
 /*
 is a pop-up panel like details panel that once clicked on shows
 multiple items from the Item class that can be purchased with
@@ -65,19 +67,23 @@ public class ShopPanel extends JPanel {
 
     private JPanel getItemPanel() {
         JPanel itemPanel = new JPanel();
-        //Prints out the items in a grid layout with 1 col
-        itemPanel.setLayout(new GridLayout(items.size(), 1));
+        itemPanel.setLayout(new GridLayout(items.size(), 1)); 
 
-        //Prints out all available items in the shop and create button
-        for (Map.Entry<String, Item> entry : items.entrySet()) {
-            String itemName = entry.getKey();
-            Item item = entry.getValue();
+        //Get items from ItemFactory
+        List<Item> itemList = ItemFactory.createItems();
 
+        //Loop through the item list(much easier than map and displays in order)
+        for (Item item : itemList) {
+            //Gets item name
+            String itemName = item.getName();
             Button itemButton = new Button(itemName + " - Price: $" + item.getPrice() + " - Health Boost: " + item.getPoints());
+
+            //Handles button
             itemButton.addActionListener(e -> purchaseItem(itemName));
-            itemButton.setPreferredSize(new Dimension(300, itemButton.getPreferredSize().height)); // Adjust width
+            itemButton.setPreferredSize(new Dimension(300, itemButton.getPreferredSize().height));
             itemPanel.add(itemButton);
         }
+
         return itemPanel;
     }
 

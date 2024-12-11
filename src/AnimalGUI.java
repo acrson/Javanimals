@@ -27,7 +27,7 @@ public class AnimalGUI {
         mainPanel.setPreferredSize(new Dimension(2000, 900));
         mainPanel.setBackground(Color.BLACK);
 
-        //Need to make a map that holds all pets made with names with there items
+        //Need to make a map that holds all pets made with names with their items
         List<Item> itemsList = ItemFactory.createItems();
         Map<String, Item> itemsMap = itemsList.stream()
                 .collect(Collectors.toMap(Item::getName, item -> item));
@@ -42,7 +42,7 @@ public class AnimalGUI {
         frame.add(mainPanel, BorderLayout.CENTER);
         petDisplayPanel.setBounds(240, 5, 1100, 340);
         shopPanel.setBounds(1350, 5, 400, 750);
-        petDetailsPanel.setBounds(240, 355, 545, 400);
+        petDetailsPanel.setBounds(330, 355, 460, 400);
         petManagementPanel.setBounds(795, 355, 545, 400);
 
         mainPanel.add(petDisplayPanel);
