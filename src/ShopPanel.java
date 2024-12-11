@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 import java.util.List;
-import java.util.Arrays;
+
 /*
 is a pop-up panel like details panel that once clicked on shows
 multiple items from the Item class that can be purchased with
@@ -11,7 +11,7 @@ different items are different costs*/
 
 public class ShopPanel extends JPanel {
     //Stores available shop items having the pets names as the keys
-    private final Map<String, Item> items;
+    private final List<Item> items;
     private double userBalance;
     private final JLabel balanceLabel;
     //Stores all pets in the database
@@ -19,7 +19,8 @@ public class ShopPanel extends JPanel {
 
     //Initializes shopPanel with items, balance, and pet database
     public ShopPanel(Map<String, Item> items, double userBalance, Map<String, Pet> petDatabase) {
-        this.items = items;
+        //Gets the items from factory
+        this.items = ItemFactory.createItems();
         this.userBalance = userBalance;
         this.petDatabase = petDatabase;
         this.balanceLabel = new JLabel("Balance: " + userBalance, JLabel.CENTER);
@@ -67,7 +68,7 @@ public class ShopPanel extends JPanel {
 
     private JPanel getItemPanel() {
         JPanel itemPanel = new JPanel();
-        itemPanel.setLayout(new GridLayout(items.size(), 1)); 
+        itemPanel.setLayout(new GridLayout(items.size(), 1));
 
         //Get items from ItemFactory
         List<Item> itemList = ItemFactory.createItems();
@@ -114,7 +115,10 @@ public class ShopPanel extends JPanel {
     }
     //Handles purchasing item and applying to pet
     public void purchaseItem(String itemName) {
-        Item item = items.get(itemName);
+        Item item = items.stream()
+                .filter(i -> i.getName().equals(itemName))
+                .findFirst()
+                .orElse(null);//Returns null if no item found
 
         //Asks user which pet they want to apply the item to
         String petName = selectPetForItem(item);
