@@ -10,6 +10,7 @@ public class PetDetailsPanel extends JPanel {
     private JPanel detailsPanel;
     private boolean isExpanded = false;
     private HashMap<Color, String> colorNames = new HashMap<>(); // Class-level field
+    private Timer healthUpdateTimer;
 
     public PetDetailsPanel(Pet pet) {
         Color skyBlue = new Color(90, 150, 255);
@@ -52,12 +53,23 @@ public class PetDetailsPanel extends JPanel {
     public void showPetDetails(Pet pet) {
         detailsPanel.removeAll(); // Clear previous details
 
+        // Stop the existing timer (if any)
+        if (healthUpdateTimer != null && healthUpdateTimer.isRunning()) {
+            healthUpdateTimer.stop();
+        }
+
         String fullSex = "";
+        String fullLife = "";
 
         if (pet.getSex() == 'M')
             fullSex = "Male";
         else
             fullSex = "Female";
+
+        if (pet.isAlive)
+            fullLife = "Alive";
+        else
+            fullLife = "Deceased";
 
         if (pet == null) {
             JLabel noDetailsLabel = new JLabel("Select a pet to view details.");
@@ -71,11 +83,72 @@ public class PetDetailsPanel extends JPanel {
             addDetailLabel("Sex: " + fullSex);
             addDetailLabel("Age: " + pet.getCurrentAge());
             addDetailLabel("Life Expectancy: " + pet.getLifeExpectancy());
+            addDetailLabel("Health: " + pet.getHealth());
+            addDetailLabel("Status: " + fullLife);
         }
+
+        healthUpdateTimer = new Timer(100, e -> updatePet(pet, detailsPanel));
+        healthUpdateTimer.start();
 
         revalidate();
         repaint();
     }
+
+    private void updatePet(Pet pet, JPanel detailsPanel) {
+        SwingUtilities.invokeLater(() -> {
+            detailsPanel.removeAll();
+            String fullSex = "";
+            String fullLife = "";
+            String cuteName;
+
+            if (pet.getSex() == 'M')
+                fullSex = "Male";
+            else
+                fullSex = "Female";
+
+            if (pet.isAlive)
+                fullLife = "Alive";
+            else
+                fullLife = "Deceased";
+
+            switch (pet.getType()) {
+                case "Dog":
+                    cuteName = "dog";
+                    break;
+                case "Cat":
+                    cuteName = "kitty";
+                    break;
+                case "Bird":
+                    cuteName = "birdy";
+                    break;
+                case "Fish":
+                    cuteName = "fishy";
+                    break;
+                default:
+                    cuteName = "thingy";
+                    break;
+            }
+
+            addDetailLabel("Name: " + pet.getName());
+            addDetailLabel("Type: " + pet.getType());
+            addDetailLabel("Color: " + getColorName(pet.getColor()));
+            addDetailLabel("Sex: " + fullSex);
+            addDetailLabel("Age: " + pet.getCurrentAge());
+            addDetailLabel("Life Expectancy: " + pet.getLifeExpectancy());
+            addDetailLabel("Health: " + pet.getHealth());
+            addDetailLabel("Status: " + fullLife);
+
+            if (pet.getHealth() == 0) {
+                addDetailLabel("");
+                addDetailLabel("Rest in peace, " + pet.getName() + ". You will be missed...");
+                addDetailLabel("Good " + cuteName + ". <3");
+            }
+
+            detailsPanel.revalidate();
+            detailsPanel.repaint();
+        });
+    }
+
 
     private void addDetailLabel(String text) {
         JLabel label = new JLabel(text);

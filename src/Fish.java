@@ -24,7 +24,7 @@ public class Fish extends Pet {
             tankMeter = 0;//Prevent negative litterMeter
         }
         System.out.println("After using the tank, it is now: " + tankMeter);
-        decreaseAttention();//Reduce health and attention
+        decreaseHealth();//Reduce health and attention
     }
     //Clean the tank, will restore tank and increase happiness
     public void cleanTank() {
@@ -34,7 +34,7 @@ public class Fish extends Pet {
         }
         tankMeter = 10;//Restore to full meter
         System.out.println("After cleaning the tank, it is now: " + tankMeter);
-        increaseAttention(3); // Increase attention and health
+        increaseHealth(3); // Increase attention and health
     }
     //Play with fish which will increase happiness
     public void play() {
@@ -42,7 +42,7 @@ public class Fish extends Pet {
             System.out.println("This pet is dead and cannot play.");
             return;
         }
-        increaseAttention(3);
+        increaseHealth(3);
     }
     @Override
     public String toString() {

@@ -22,7 +22,7 @@ public class Bird extends Pet{
             flymeter = 0;
         }
         System.out.println("Bird must fly around, flymeter is now: " + flymeter);
-        decreaseAttention();
+        //decreaseHealth();
     }
 
     public void flyingBird(){
@@ -32,7 +32,7 @@ public class Bird extends Pet{
         }
         flymeter = 10;
         System.out.println("After flying bird, flymeter is now: " + flymeter);
-        increaseAttention(3);
+        increaseHealth(3);
     }
 
     public void play(){
@@ -40,7 +40,7 @@ public class Bird extends Pet{
             System.out.println("Bird is dead");
             return;
         }
-        increaseAttention(3);
+        increaseHealth(3);
     }
 
     public String toString() {

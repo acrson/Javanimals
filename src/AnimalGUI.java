@@ -10,7 +10,6 @@ public class AnimalGUI {
     public static PetManagementPanel petManagementPanel;
     public static PetDisplayPanel petDisplayPanel;
     public static PetDetailsPanel petDetailsPanel;
-    public static InventoryPanel inventoryPanel;
     public static ShopPanel shopPanel;
 
     //Map my animal inputted names to access them in ShopPanel
@@ -38,19 +37,16 @@ public class AnimalGUI {
         petDisplayPanel = new PetDisplayPanel();
         petDetailsPanel = new PetDetailsPanel(pet);
         petManagementPanel = new PetManagementPanel(petDisplayPanel, petDetailsPanel);
-        inventoryPanel = new InventoryPanel();
         shopPanel = new ShopPanel(itemsMap, userPoints, petDatabase);
 
         frame.add(mainPanel, BorderLayout.CENTER);
-        petDisplayPanel.setBounds(240, 65, 1100, 280);
+        petDisplayPanel.setBounds(240, 5, 1100, 340);
         shopPanel.setBounds(1350, 5, 400, 750);
-        inventoryPanel.setBounds(240, 5, 1100, 50);
         petDetailsPanel.setBounds(240, 355, 545, 400);
         petManagementPanel.setBounds(795, 355, 545, 400);
 
         mainPanel.add(petDisplayPanel);
         mainPanel.add(petDetailsPanel);
-        mainPanel.add(inventoryPanel);
         mainPanel.add(petManagementPanel);
         mainPanel.add(shopPanel);
 

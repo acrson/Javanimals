@@ -1,3 +1,3 @@
 public interface PetListener {
-    void onPetCreated(Pet pet);
+    void onPetUpdated(Pet pet);
 }

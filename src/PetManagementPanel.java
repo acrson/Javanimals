@@ -15,9 +15,14 @@ public class PetManagementPanel extends JPanel {
     Color Brown = new Color(100, 60, 25);
     Color Beige = new Color(207, 185, 151);
     String dogimg = "\n\n  / \\__     \n (    @\\__  \n /         O\n/   (_____/ \n/_____/   U\n\n\n";
-    String catimg = "\n\n\n /\\_/\\ \n( o.o )\n > ^ < \n\n\n";
+    String catimg = "\n\n\n /\\_/\\ \n( o.o )\n > ^ < \n\n\n\n";
     String birdimg = "\n\n\n  .--.   \n <(o )___\n  (   ._> \n `----'   \n\n\n";
-    String fishimg = "\n\n\n\n><(((('>\n\n\n";
+    String fishimg = "\n\n\n\n><(((('>\n\n\n\n\n";
+    String deaddogimg = "\n\n  / \\__     \n (    X\\__  \n /         O\n/   (_____/ \n/_____/   \n\n\n";
+    String deadcatimg = "\n\n\n /\\_/\\ \n( x.x )\n > ^ < \n\n\n\n";
+    String deadbirdimg = "\n\n\n  .--.   \n <(x )___\n  (   ._> \n `----'   \n\n\n";
+    String deadfishimg = "\n\n\n\n><((((#>\n\n\n\n\n";
+
     //Constructor
     public PetManagementPanel(PetDisplayPanel petDisplayPanel, PetDetailsPanel petDetailsPanel) {
         this.setPreferredSize(new Dimension(400, 400));
@@ -25,6 +30,7 @@ public class PetManagementPanel extends JPanel {
         JLabel titleLabel = new JLabel("Pet Management Panel");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
         // Pet Form Components
         JLabel nameLabel = new JLabel("Name:");
         JTextField nameField = new JTextField(15);
@@ -52,7 +58,7 @@ public class PetManagementPanel extends JPanel {
         this.add(titleLabel, BorderLayout.NORTH);
         this.add(formPanel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
-// Button Action Listener
+        // Button Action Listener
         createPetButton.addActionListener(e -> {
             String name = nameField.getText();
             String type = (String) typeComboBox.getSelectedItem();
@@ -99,15 +105,28 @@ public class PetManagementPanel extends JPanel {
     private JPanel createPetPanel(Pet pet, PetDetailsPanel petDetailsPanel) {
         JPanel petPanel = new JPanel();
         petPanel.setLayout(new BoxLayout(petPanel, BoxLayout.Y_AXIS));
-        petPanel.setPreferredSize(new Dimension(262, 242));
+        petPanel.setPreferredSize(new Dimension(262, 302));
         petPanel.setBackground(pet.getColor());
         JLabel petNameLabel = new JLabel(pet.getName());
         JLabel petImageLabel = new JLabel(getPetImage(pet.getType()));
+
         if (pet.getColor().equals(Color.BLACK) || pet.getColor().equals(Color.BLUE)
                 || pet.getColor().equals(Brown) || pet.getColor().equals(Color.DARK_GRAY)) {
             petNameLabel.setForeground(Color.WHITE);
             petImageLabel.setForeground(Color.WHITE);
         }
+
+        // Pet health bar setup
+        JProgressBar healthBar = new JProgressBar();
+        healthBar.setValue(pet.getHealth() * 10);
+        healthBar.setString(pet.getHealth() + " / 10");
+        healthBar.setStringPainted(true);
+        updateHealthBarColor(healthBar, pet.getHealth());
+
+        // Timer to keep the pet's visual updated
+        Timer healthUpdateTimer = new Timer(100, e -> updatePet(healthBar, pet, petImageLabel, petNameLabel));
+        healthUpdateTimer.start();
+
         JButton detailsButton = new JButton("View Details");
         detailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         detailsButton.addActionListener(e -> petDetailsPanel.showPetDetails(pet));
@@ -116,10 +135,42 @@ public class PetManagementPanel extends JPanel {
         petNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         petImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         petPanel.add(petNameLabel);
+        petPanel.add(new JLabel("<html><br></html>"));
         petPanel.add(petImageLabel);
+        petPanel.add(new JLabel("<html><br></html>"));
+        petPanel.add(new JLabel("<html><br></html>"));
+        petPanel.add(healthBar);
+        petPanel.add(new JLabel("<html><br></html>"));
         petPanel.add(detailsButton);
+
         return petPanel;
     }
+
+    // Helper method to update the health bar color
+    private void updateHealthBarColor(JProgressBar healthBar, int health) {
+        /*if (health >= 7) {
+            healthBar.setForeground(Color.GREEN);
+        } else if (health >= 4) {
+            healthBar.setForeground(Color.ORANGE);
+        } else {
+            healthBar.setForeground(Color.RED);
+        }*/
+        healthBar.setForeground(new Color((10 - health) * 25, health * 25, 0));
+    }
+
+    // Helper method to update the health bar
+    private void updatePet(JProgressBar healthBar, Pet pet, JLabel petImageLabel, JLabel petNameLabel) {
+        int health = pet.getHealth();
+        healthBar.setValue(health * 10); // Assuming health is out of 10
+        healthBar.setString(health + " / 10");
+        updateHealthBarColor(healthBar, health);
+
+        if (health == 0) {
+            petImageLabel.setText(getDeadPetImage(pet.getType())); // Update to the dead image
+            petNameLabel.setText("R.I.P. " + pet.getName());
+        }
+    }
+
     // Helper method to get pet image as HTML
     private String getPetImage(String type) {
         String img = switch (type) {
@@ -133,6 +184,20 @@ public class PetManagementPanel extends JPanel {
                 img.replace(" ", "&nbsp;").replace("<", "&lt;").replace("\n", "<br>") +
                 "</div></html>";
     }
+
+    private String getDeadPetImage(String type) {
+        String img = switch (type) {
+            case "Dog" -> deaddogimg;
+            case "Cat" -> deadcatimg;
+            case "Bird" -> deadbirdimg;
+            case "Fish" -> deadfishimg;
+            default -> "";
+        };
+        return "<html><div style='text-align: center; font-family: monospace;'>" +
+                img.replace(" ", "&nbsp;").replace("<", "&lt;").replace("\n", "<br>") +
+                "</div></html>";
+    }
+
     // Helper method to convert color names to Color objects
     private Color getColorFromName(String colorName) {
         switch (colorName) {

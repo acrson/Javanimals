@@ -33,7 +33,7 @@ public class Item
     {
         if (isApplicable(pet.getClass().getSimpleName()))
         {
-            pet.increaseAttention(3);
+            pet.increaseHealth(3);
         }
     }*/
 

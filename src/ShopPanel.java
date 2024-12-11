@@ -73,7 +73,7 @@ public class ShopPanel extends JPanel {
             String itemName = entry.getKey();
             Item item = entry.getValue();
 
-            Button itemButton = new Button(itemName + " - Price: $" + item.getPrice() + " - Attention Boost: " + item.getPoints());
+            Button itemButton = new Button(itemName + " - Price: $" + item.getPrice() + " - Health Boost: " + item.getPoints());
             itemButton.addActionListener(e -> purchaseItem(itemName));
             itemButton.setPreferredSize(new Dimension(300, itemButton.getPreferredSize().height)); // Adjust width
             itemPanel.add(itemButton);
@@ -123,7 +123,7 @@ public class ShopPanel extends JPanel {
 
             Pet pet = petDatabase.get(petName);
 
-            pet.increaseAttention(item.getPoints());//Increases effects from item to the selected pet
+            pet.increaseHealth(item.getPoints());//Increases effects from item to the selected pet
 
             updateBalanceLabel();
         } else {

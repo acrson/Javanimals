@@ -22,7 +22,7 @@ public class Cat extends Pet {
             litterMeter = 0;//Prevent negative litterMeter
         }
         System.out.println("After using the litter box, LitterMeter is now: " + litterMeter);
-        decreaseAttention();//Reduce health and attention
+        decreaseHealth();//Reduce health and attention
     }
     //Clean litter box will restore litter meter and increase happiness
     public void cleanLitterBox() {
@@ -32,7 +32,7 @@ public class Cat extends Pet {
         }
         litterMeter = 10;//Restore to full meter
         System.out.println("After cleaning the litter box, LitterMeter is now: " + litterMeter);
-        increaseAttention(3);// Increase attention and health
+        increaseHealth(3);// Increase attention and health
     }
     //Playing with the cat increases happiness
     public void play() {
@@ -40,7 +40,7 @@ public class Cat extends Pet {
             System.out.println("This pet is dead and cannot play.");
             return;
         }
-        increaseAttention(3);
+        increaseHealth(3);
     }
     @Override
     public String toString() {

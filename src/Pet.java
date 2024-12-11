@@ -12,9 +12,9 @@ public class Pet {
     private int lifeExpectancy;
     private Color color;
     private char sex;
-    private boolean isAlive;
+    public boolean isAlive;
     private int amount;
-    private Timer attentionDecrementTimer;
+    private Timer healthDecrementTimer;
 
     // Constructor for Pet
     public Pet(String name, String type, int health, int attention, int currentAge,
@@ -29,7 +29,7 @@ public class Pet {
         this.sex = sex;
         this.isAlive = true;
 
-        startAttentionDecrementTimer();
+        startHealthDecrementTimer();
     }
 
     //Getters
@@ -88,13 +88,12 @@ public class Pet {
     }
 
     //Increases Attention meter(changed since we will only have one meter)
-    protected void increaseAttention(int amount)
+    protected void increaseHealth(int amount)
     {
-        //only will run if health is = or below 10(doesn't go below meter)
+        //only will run if health is = or below 10 (doesn't go above meter)
         if (health <= 10) {
-            health = Math.max(health + 1, 0);//decreases happiness, ensure it doesn't go below 0
-            attention = Math.max(attention + 2, 0);//decreases health, ensure it doesn't go below 0
-            System.out.println("Health: " + health + ", Attention: " + attention);
+            health = Math.max(health + amount, 10);
+            System.out.println("Health: " + health);
             //Update isAlive based on health
             if (health <= 0) {
                 isAlive = false;
@@ -102,36 +101,36 @@ public class Pet {
             }
         }
     }
-    protected void decreaseAttention() {
+
+    protected void decreaseHealth() {
         health = Math.max(health - 1, 0);//decreases happiness, ensure it doesn't go below 0
-        attention = Math.max(attention - 2, 0);//decreases health, ensure it doesn't go below 0
-        System.out.println("Health: " + health + ", Attention: " + attention);
+        System.out.println("Health: " + health);
         //Update isAlive based on health
-        if (attention <= 0) {
+        if (health <= 0) {
             isAlive = false;
             System.out.println(name + " has passed away.");
         }
     }
 
     // Starts the timer to decrease attention every 30 seconds
-    private void startAttentionDecrementTimer() {
-        attentionDecrementTimer = new Timer(true); //timer stops when program ends
-        attentionDecrementTimer.scheduleAtFixedRate(new TimerTask() {
+    private void startHealthDecrementTimer() {
+        healthDecrementTimer = new Timer(true); //timer stops when program ends
+        healthDecrementTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (isAlive) {
-                    decreaseAttention(1);
+                    decreaseHealth();
                 } else {
-                    attentionDecrementTimer.cancel(); // Stop timer if the pet is not alive
+                    healthDecrementTimer.cancel(); // Stop timer if the pet is not alive
                 }
             }
-        }, 0, 30 * 1000); // 30 seconds interval
+        }, 0, 15 * 1000); // 15 seconds interval
     }
 
     // Stops the attention decrement timer
     public void stopAttentionDecrementTimer() {
-        if (attentionDecrementTimer != null) {
-            attentionDecrementTimer.cancel();
+        if (healthDecrementTimer != null) {
+            healthDecrementTimer.cancel();
         }
     }
 
