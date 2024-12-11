@@ -15,6 +15,7 @@ public class Pet {
     public boolean isAlive;
     private int amount;
     private Timer healthDecrementTimer;
+    private boolean hasStarted = false;
 
     // Constructor for Pet
     public Pet(String name, String type, int health, int attention, int currentAge,
@@ -119,12 +120,16 @@ public class Pet {
 
     // Starts the timer to decrease attention every 30 seconds
     private void startHealthDecrementTimer() {
-        healthDecrementTimer = new Timer(true); //timer stops when program ends
+        healthDecrementTimer = new Timer(true); // Timer stops when program ends
         healthDecrementTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (isAlive) {
-                    decreaseHealth();
+                    if (hasStarted) {
+                        decreaseHealth(); // Only decrease health after the first interval
+                    } else {
+                        hasStarted = true; // Set flag after the first interval
+                    }
                 } else {
                     healthDecrementTimer.cancel(); // Stop timer if the pet is not alive
                 }

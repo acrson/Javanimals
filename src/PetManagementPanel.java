@@ -19,7 +19,7 @@ public class PetManagementPanel extends JPanel {
 
     //Constructor
     public PetManagementPanel(PetDisplayPanel petDisplayPanel, PetDetailsPanel petDetailsPanel) {
-        this.setPreferredSize(new Dimension(400, 400));
+        //this.setPreferredSize(new Dimension(400, 400));
         this.setBackground(Color.lightGray);
         JLabel titleLabel = new JLabel("Pet Management Panel");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
