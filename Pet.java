@@ -120,7 +120,7 @@ public class Pet {
             @Override
             public void run() {
                 if (isAlive) {
-                    decreaseAttention();
+                    decreaseAttention(1);
                 } else {
                     attentionDecrementTimer.cancel(); // Stop timer if the pet is not alive
                 }

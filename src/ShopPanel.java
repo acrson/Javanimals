@@ -116,12 +116,23 @@ public class ShopPanel extends JPanel {
             return;//Item can't be applied to the selected pet
         }
 
+        //Retrieve selected pet from the database
+        Pet pet = petDatabase.get(petName);
+
+        //Checks if pets heal is 0, if so outputs an error saying Pet is dead
+        if (pet.getHealth() == 0) {
+            JOptionPane.showMessageDialog(this,
+                petName + " is no longer alive. Items cannot be applied.",
+                    "Pet Unavailable",
+                    JOptionPane.ERROR_MESSAGE);
+            System.out.println(petName + " is no longer alive. Items cannot be applied.");
+            return;
+        }
+
         //Check if user has enough balance to purchase an item
         if (userBalance >= item.getPrice()) {
             userBalance -= item.getPrice();//minuses item price from current balance
             System.out.println("You purchased " + item.getName() + " for " + petName + ".");
-
-            Pet pet = petDatabase.get(petName);
 
             pet.increaseHealth(item.getPoints());//Increases effects from item to the selected pet
 

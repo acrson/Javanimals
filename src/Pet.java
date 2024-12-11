@@ -90,9 +90,14 @@ public class Pet {
     //Increases Attention meter(changed since we will only have one meter)
     protected void increaseHealth(int amount)
     {
+        if (!isAlive) {
+            System.out.println(name + " is no longer alive. Health cannot be increased.");
+            return; // Prevent increasing health for dead pets
+        }
         //only will run if health is = or below 10 (doesn't go above meter)
         if (health <= 10) {
-            health = Math.max(health + amount, 10);
+            //can't be max since it will add 10 rather than the amount
+            health = Math.min(health + amount, 10);
             System.out.println("Health: " + health);
             //Update isAlive based on health
             if (health <= 0) {
