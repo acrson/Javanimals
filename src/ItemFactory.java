@@ -18,7 +18,7 @@ public class ItemFactory
                 new Item("Seeds", 5, 1, List.of("Bird")),
 
                 new Item("Fish Toys", 10, 3, List.of("Fish")),
-                new Item("Fish Tank Plant", 6, 6, List.of("Fish")),
+                new Item("Fish Tank Plant", 6, 2, List.of("Fish")),
                 new Item("Jumping Hoops", 3, 6, List.of("Fish"))
         );
     }
