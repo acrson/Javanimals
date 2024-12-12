@@ -1,14 +1,12 @@
+// GUI JPanel used to display the details of a pet
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class PetDetailsPanel extends JPanel {
-    private JButton toggleButton;
     private JPanel detailsPanel;
-    private boolean isExpanded = false;
     private HashMap<Color, String> colorNames = new HashMap<>(); // Class-level field
     private Timer healthUpdateTimer;
 
@@ -22,18 +20,6 @@ public class PetDetailsPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         add(titleLabel, BorderLayout.NORTH);
-
-        /*
-        toggleButton = new JButton("PetDetailsPanel");
-        toggleButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                isExpanded = !isExpanded;
-                detailsPanel.setVisible(isExpanded);
-                toggleButton.setText(isExpanded ? "Hide Details" : "Show Details");
-            }
-        });
-        add(toggleButton);*/
 
         detailsPanel = new JPanel();
         detailsPanel.setBackground(skyBlue);
@@ -94,6 +80,7 @@ public class PetDetailsPanel extends JPanel {
         repaint();
     }
 
+    // This method updates the information of the pet in real time on the details panel
     private void updatePet(Pet pet, JPanel detailsPanel) {
         SwingUtilities.invokeLater(() -> {
             detailsPanel.removeAll();
@@ -149,7 +136,7 @@ public class PetDetailsPanel extends JPanel {
         });
     }
 
-
+    // Helper method that creates and adds a JLabel to the details panel
     private void addDetailLabel(String text) {
         JLabel label = new JLabel(text);
         label.setAlignmentX(Component.LEFT_ALIGNMENT); // Align text to the left
@@ -158,6 +145,7 @@ public class PetDetailsPanel extends JPanel {
         detailsPanel.add(Box.createVerticalStrut(5)); // Add some space between labels
     }
 
+    // This method takes the Color type (from the pet) and converts it to its respective color name
     private String getColorName(Color color) {
         Color Brown = new Color(100, 60, 25);
         Color Beige = new Color(207, 185, 151);

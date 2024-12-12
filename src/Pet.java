@@ -1,3 +1,5 @@
+// Pet class - Foundation for the logic of each pet
+
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,7 +15,6 @@ public class Pet {
     private Color color;
     private char sex;
     public boolean isAlive;
-    private int amount;
     private Timer healthDecrementTimer;
     private boolean hasStarted = false;
 
@@ -85,7 +86,6 @@ public class Pet {
         this.health = health;
     }
     public void setAttention(int attention) {
-        this.attention += amount; //returns amount of attention
     }
 
     //Increases Attention meter(changed since we will only have one meter)

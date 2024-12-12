@@ -1,13 +1,14 @@
+// GUI JPanel used to create new pets, also stores the information and logic for the pet GUI (pet panel)
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class PetManagementPanel extends JPanel {
     private static final int MAX_PETS = 4; //Maximum number of pets in the array
-    boolean uniqueName = true;
     Color Brown = new Color(100, 60, 25);
     Color Beige = new Color(207, 185, 151);
+
+    // Strings used to display the ASCII animals
     String dogimg = "\n\n  / \\__     \n (    @\\__  \n /         O\n/   (_____/ \n/_____/   U\n\n\n";
     String catimg = "\n\n\n /\\_/\\ \n( o.o )\n > ^ < \n\n\n\n";
     String birdimg = "\n\n\n  .--.   \n <(o )___\n  (   ._> \n `----'   \n\n\n";
@@ -142,13 +143,7 @@ public class PetManagementPanel extends JPanel {
 
     // Helper method to update the health bar color
     private void updateHealthBarColor(JProgressBar healthBar, int health) {
-        /*if (health >= 7) {
-            healthBar.setForeground(Color.GREEN);
-        } else if (health >= 4) {
-            healthBar.setForeground(Color.ORANGE);
-        } else {
-            healthBar.setForeground(Color.RED);
-        }*/
+        // Dynamically creates color between green and red based upon pet's current health
         healthBar.setForeground(new Color((10 - health) * 25, health * 25, 0));
     }
 
@@ -179,6 +174,7 @@ public class PetManagementPanel extends JPanel {
                 "</div></html>";
     }
 
+    // Helper method to get DEAD (rip) pet image as HTML
     private String getDeadPetImage(String type) {
         String img = switch (type) {
             case "Dog" -> deaddogimg;
@@ -192,7 +188,7 @@ public class PetManagementPanel extends JPanel {
                 "</div></html>";
     }
 
-    // Helper method to convert color names to Color objects
+    // Helper method that converts color names to Color objects
     private Color getColorFromName(String colorName) {
         switch (colorName) {
             case "Red":

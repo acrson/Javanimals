@@ -1,3 +1,5 @@
+// GUI JPanel used to display the pets
+
 import javax.swing.*;
 import java.awt.*;
 

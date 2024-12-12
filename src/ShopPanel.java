@@ -1,3 +1,5 @@
+// GUI JPanel that contains a shop that the player can buy items from for the pets
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;

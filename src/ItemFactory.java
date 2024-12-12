@@ -3,7 +3,7 @@ import java.util.List;
 
 public class ItemFactory
 {
-    //added more items
+    // Items to choose from, displayed in Shop Panel
     public static List<Item> createItems()
     {
         return Arrays.asList(

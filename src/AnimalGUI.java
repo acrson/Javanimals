@@ -1,3 +1,6 @@
+/* JAVANIMALS
+Created by Miranda Nichols, Carson Stell, Camryn Joyner, Craig Crutcher */
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;

@@ -27,15 +27,4 @@ public class Item
     {
         return applicableAnimals.contains(petType);
     }
-
-   // not sure if well use this here but thought id make it just in case
-   /*public void applyToPet(Pet pet) //applies points to pets happiness
-    {
-        if (isApplicable(pet.getClass().getSimpleName()))
-        {
-            pet.increaseHealth(3);
-        }
-    }*/
-
-    //example
 }
